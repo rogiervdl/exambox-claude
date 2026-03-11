@@ -1,0 +1,444 @@
+/* =====================================================
+   ExamBox — Dark theme editor layout
+   ===================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-base:       #1e1e1e;
+  --bg-toolbar:    #252526;
+  --bg-pane:       #1e1e1e;
+  --bg-header:     #2d2d30;
+  --bg-preview:    #ffffff;
+  --border:        #3e3e42;
+  --text-primary:  #cccccc;
+  --text-muted:    #858585;
+  --accent-run:    #0e7a3d;
+  --accent-run-h:  #11a050;
+  --accent-dl:     #2b5797;
+  --accent-dl-h:   #3a6ec0;
+  --accent-html:   #e44d26;
+  --accent-css:    #264de4;
+  --accent-js:     #f0db4f;
+  --resizer-w:     5px;
+  --toolbar-h:     44px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* ── Toolbar ──────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--toolbar-h);
+  background: var(--bg-toolbar);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.toolbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar__logo {
+  width: 22px;
+  height: 22px;
+  color: #569cd6;
+}
+
+.toolbar__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #d4d4d4;
+  letter-spacing: 0.5px;
+}
+
+.toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s, opacity 0.15s;
+  color: #ffffff;
+  background: #3c3c3c;
+  white-space: nowrap;
+}
+
+.btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.btn:hover { background: #4a4a4a; }
+.btn:active { opacity: 0.8; }
+
+.btn--icon { color: var(--text-primary); }
+
+.btn--primary {
+  background: var(--accent-run);
+}
+.btn--primary:hover { background: var(--accent-run-h); }
+
+.btn--secondary {
+  background: var(--accent-dl);
+}
+.btn--secondary:hover { background: var(--accent-dl-h); }
+
+.btn--xs {
+  padding: 2px 8px;
+  font-size: 11px;
+}
+.btn--xs svg { width: 11px; height: 11px; }
+
+/* ── Workspace ────────────────────────────────────── */
+.workspace {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - var(--toolbar-h));
+  overflow: hidden;
+}
+
+/* ── Editors panel ────────────────────────────────── */
+.editors-panel {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 50%;
+  min-width: 200px;
+  overflow: hidden;
+}
+
+/* Vertical layout: editors stacked */
+.workspace.layout-vertical .editors-panel {
+  flex-direction: column;
+  flex: 0 0 50%;
+}
+
+/* Stacked layout: editors bovenaan, preview volle breedte onderaan */
+.workspace.layout-stacked {
+  flex-direction: column;
+}
+
+.workspace.layout-stacked .editors-panel {
+  flex-direction: row;
+  flex: 0 0 50%;
+  min-width: 0;
+  width: 100%;
+}
+
+.workspace.layout-stacked .resizer--main {
+  width: auto;
+  height: var(--resizer-w);
+  cursor: row-resize;
+}
+
+.workspace.layout-stacked .preview-panel {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ── Editor pane ──────────────────────────────────── */
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+}
+
+.workspace.layout-vertical .editor-pane {
+  border-right: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-pane:last-child {
+  border-right: none;
+}
+
+.workspace.layout-vertical .editor-pane:last-child {
+  border-bottom: none;
+}
+
+.workspace.layout-stacked .editor-pane {
+  border-right: 1px solid var(--border);
+  border-bottom: none;
+}
+
+.workspace.layout-stacked .editor-pane:last-child {
+  border-right: none;
+}
+
+.editor-pane__header {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.editor-pane__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.editor-pane__label--html { color: var(--accent-html); }
+.editor-pane__label--css  { color: var(--accent-css);  }
+.editor-pane__label--js   { color: var(--accent-js);   }
+
+.editor-pane__body {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Minimize knop ────────────────────────────────── */
+.editor-pane__header {
+  justify-content: space-between;
+}
+
+.btn-minimize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-radius: 3px;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+}
+
+.btn-minimize:hover {
+  color: var(--text-primary);
+  background: #3e3e42;
+}
+
+.btn-minimize svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+/* Geminimaliseerd: pijltje omdraaien */
+.editor-pane.is-minimized .btn-minimize svg {
+  transform: rotate(180deg);
+}
+
+/* ── Geminimaliseerde pane ────────────────────────── */
+
+/* Horizontaal/stacked: editors naast elkaar → minimaliseer naar smalle strook */
+.editor-pane.is-minimized {
+  flex: 0 0 30px !important;
+  min-width: 30px;
+  overflow: hidden;
+}
+
+.editor-pane.is-minimized .editor-pane__body {
+  display: none;
+}
+
+/* Label roteren in smalle strook (horizontale layouts) */
+.editor-pane.is-minimized .editor-pane__header {
+  flex-direction: column-reverse;
+  height: 100%;
+  width: 30px;
+  padding: 8px 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.editor-pane.is-minimized .editor-pane__label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 1.5px;
+}
+
+/* Verticale layout: editors gestapeld → minimaliseer naar dunne balk */
+.workspace.layout-vertical .editor-pane.is-minimized {
+  flex: 0 0 30px !important;
+  min-height: 30px;
+  min-width: 0;
+}
+
+.workspace.layout-vertical .editor-pane.is-minimized .editor-pane__header {
+  flex-direction: row;
+  height: 30px;
+  width: auto;
+  padding: 0 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.workspace.layout-vertical .editor-pane.is-minimized .editor-pane__label {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+/* ── Resizers ─────────────────────────────────────── */
+.resizer {
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.resizer:hover,
+.resizer.is-dragging {
+  background: #569cd6;
+}
+
+/* Horizontal resizer between editor panes */
+.resizer[data-axis="horizontal"] {
+  width: var(--resizer-w);
+  cursor: col-resize;
+}
+
+.workspace.layout-vertical .resizer[data-axis="horizontal"] {
+  width: auto;
+  height: var(--resizer-w);
+  cursor: row-resize;
+}
+
+/* Main resizer between editors panel and preview */
+.resizer--main {
+  width: var(--resizer-w);
+  cursor: col-resize;
+}
+
+.workspace.layout-vertical .resizer--main {
+  width: var(--resizer-w);
+  cursor: col-resize;
+}
+
+/* ── Preview panel ────────────────────────────────── */
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+.preview-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.preview-panel__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+#preview-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: var(--bg-preview);
+}
+
+/* ── Live toggle ──────────────────────────────────── */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle__track {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  background: #555;
+  border-radius: 9px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle input:checked + .toggle__track {
+  background: var(--accent-run);
+}
+
+.toggle input:checked + .toggle__track::after {
+  transform: translateX(14px);
+}
+
+.toggle__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #777; }

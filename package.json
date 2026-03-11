@@ -1,0 +1,15 @@
+{
+  "name": "exambox",
+  "version": "1.0.0",
+  "description": "Zelfgehoste HTML/CSS/JS editor voor examens",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "setup": "node scripts/copy-vendor.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "monaco-editor": "^0.45.0",
+    "jszip": "^3.10.1"
+  }
+}

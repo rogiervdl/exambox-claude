@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExamBox</title>
+  <link rel="stylesheet" href="/vendor/monaco-editor/min/vs/editor/editor.main.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <header class="toolbar">
+    <div class="toolbar__brand">
+      <svg class="toolbar__logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 7l-2 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="toolbar__title">ExamBox</span>
+    </div>
+    <div class="toolbar__actions">
+      <button id="btn-layout" class="btn btn--icon" title="Wissel layout" aria-label="Wissel layout">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="8" height="18" rx="1" stroke="currentColor" stroke-width="2"/>
+          <rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+          <rect x="13" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>Layout</span>
+      </button>
+      <label class="toggle" title="Ververs preview automatisch bij wijzigingen">
+        <input type="checkbox" id="toggle-live" />
+        <span class="toggle__track"></span>
+        <span class="toggle__label">Live</span>
+      </label>
+      <button id="btn-run" class="btn btn--primary" title="Voer code uit (Ctrl+Enter)">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+        </svg>
+        <span>Run</span>
+      </button>
+      <button id="btn-download" class="btn btn--secondary" title="Download als ZIP">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3v12M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Download</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="workspace" id="workspace">
+
+    <div class="editors-panel" id="editors-panel">
+
+      <div class="editor-pane" id="pane-html">
+        <div class="editor-pane__header">
+          <span class="editor-pane__label editor-pane__label--html">HTML</span>
+          <button class="btn-minimize" data-pane="pane-html" title="Minimaliseer">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="editor-pane__body" id="editor-html"></div>
+      </div>
+
+      <div class="resizer" data-axis="horizontal" data-index="0"></div>
+
+      <div class="editor-pane" id="pane-css">
+        <div class="editor-pane__header">
+          <span class="editor-pane__label editor-pane__label--css">CSS</span>
+          <button class="btn-minimize" data-pane="pane-css" title="Minimaliseer">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="editor-pane__body" id="editor-css"></div>
+      </div>
+
+      <div class="resizer" data-axis="horizontal" data-index="1"></div>
+
+      <div class="editor-pane" id="pane-js">
+        <div class="editor-pane__header">
+          <span class="editor-pane__label editor-pane__label--js">JS</span>
+          <button class="btn-minimize" data-pane="pane-js" title="Minimaliseer">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="editor-pane__body" id="editor-js"></div>
+      </div>
+
+    </div>
+
+    <div class="resizer resizer--main" id="main-resizer"></div>
+
+    <div class="preview-panel" id="preview-panel">
+      <div class="preview-panel__header">
+        <span class="preview-panel__label">Preview</span>
+        <button id="btn-run-inline" class="btn btn--xs btn--primary" title="Run (Ctrl+Enter)">
+          <svg viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <iframe id="preview-frame" sandbox="allow-scripts" title="Preview"></iframe>
+    </div>
+
+  </main>
+
+  <!-- Vendor scripts -->
+  <script src="/vendor/jszip.min.js"></script>
+  <script>
+    // Monaco AMD loader configuratie — lokaal pad
+    var require = { paths: { vs: '/vendor/monaco-editor/min/vs' } };
+  </script>
+  <script src="/vendor/monaco-editor/min/vs/loader.js"></script>
+  <script src="/js/main.js"></script>
+
+</body>
+</html>
