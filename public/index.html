@@ -37,6 +37,14 @@
         </svg>
         <span>Run</span>
       </button>
+      <label class="btn btn--secondary" title="Upload ZIP (index.html, style.css, script.js)" style="cursor:pointer">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21V9M8 13l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Upload</span>
+        <input type="file" id="input-upload" accept=".zip" style="display:none" />
+      </label>
       <button id="btn-download" class="btn btn--secondary" title="Download als ZIP">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 3v12M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

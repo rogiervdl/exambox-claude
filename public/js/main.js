@@ -172,6 +172,39 @@ console.log('ExamBox geladen!');`;
     document.getElementById('btn-run-inline').addEventListener('click', runCode);
     document.getElementById('btn-download').addEventListener('click', downloadZip);
 
+    // ── Upload ZIP ─────────────────────────────────────
+    document.getElementById('input-upload').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      JSZip.loadAsync(file).then(function (zip) {
+        const reads = [
+          { key: 'html', names: ['index.html'] },
+          { key: 'css',  names: ['style.css', 'styles.css'] },
+          { key: 'js',   names: ['script.js', 'scripts.js'] },
+        ];
+
+        reads.forEach(function (entry) {
+          let zipFile = null;
+          for (const name of entry.names) {
+            zipFile = zip.file(name) || zip.file(new RegExp('(^|/)' + name + '$', 'i'))[0];
+            if (zipFile) break;
+          }
+          if (!zipFile) return;
+
+          zipFile.async('string').then(function (content) {
+            editors[entry.key].setValue(content);
+          });
+        });
+
+        // Reset file input zodat dezelfde ZIP opnieuw geüpload kan worden
+        e.target.value = '';
+      }).catch(function () {
+        alert('Kon de ZIP niet lezen. Controleer of het een geldig ZIP-bestand is.');
+        e.target.value = '';
+      });
+    });
+
     // ── Live update ────────────────────────────────────
     let liveDebounceTimer = null;
 
