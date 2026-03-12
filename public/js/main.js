@@ -66,11 +66,70 @@ console.log('ExamBox geladen!');`;
       }),
     };
 
+    // ── Console panel ──────────────────────────────────
+    const consolePanel  = document.getElementById('console-panel');
+    const consoleOutput = document.getElementById('console-output');
+    const consoleBadge  = document.getElementById('console-badge');
+    let errorCount = 0;
+
+    function clearConsole() {
+      consoleOutput.innerHTML = '';
+      errorCount = 0;
+      consoleBadge.textContent = '';
+      consoleBadge.classList.remove('visible');
+    }
+
+    function appendConsoleEntry(type, text) {
+      const entry = document.createElement('div');
+      entry.className = 'console-entry console-entry--' + type;
+      const typeEl = document.createElement('span');
+      typeEl.className = 'console-entry__type';
+      typeEl.textContent = type;
+      const textEl = document.createElement('span');
+      textEl.className = 'console-entry__text';
+      textEl.textContent = text;
+      entry.appendChild(typeEl);
+      entry.appendChild(textEl);
+      consoleOutput.appendChild(entry);
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+      if (type === 'error' || type === 'warn') {
+        if (consolePanel.classList.contains('is-collapsed')) {
+          errorCount++;
+          consoleBadge.textContent = errorCount;
+          consoleBadge.classList.add('visible');
+        }
+      }
+    }
+
+    window.addEventListener('message', function (e) {
+      if (!e.data || e.data.__exambox !== true) return;
+      const text = e.data.args.join(' ');
+      appendConsoleEntry(e.data.type, text);
+    });
+
+    document.getElementById('console-toggle').addEventListener('click', function (e) {
+      if (e.target === document.getElementById('console-clear')) return;
+      consolePanel.classList.toggle('is-collapsed');
+      if (!consolePanel.classList.contains('is-collapsed')) {
+        errorCount = 0;
+        consoleBadge.textContent = '';
+        consoleBadge.classList.remove('visible');
+      }
+    });
+
+    document.getElementById('console-clear').addEventListener('click', function (e) {
+      e.stopPropagation();
+      clearConsole();
+    });
+
     // ── Run functie ────────────────────────────────────
     function runCode() {
       const html = editors.html.getValue();
       const css  = editors.css.getValue();
       const js   = editors.js.getValue();
+
+      clearConsole();
 
       // Injecteer CSS en JS in het HTML-document
       const doc = injectAssets(html, css, js);
@@ -84,11 +143,28 @@ console.log('ExamBox geladen!');`;
      *   - Als er een </body> tag is → voeg <script> toe vóór </body>
      *   - Anders → append aan het einde
      */
+    const CONSOLE_BRIDGE = `<script>(function(){` +
+      `var _s=function(t,a){try{window.parent.postMessage({__exambox:true,type:t,` +
+      `args:Array.prototype.slice.call(a).map(function(x){try{` +
+      `return typeof x==='object'?JSON.stringify(x,null,2):String(x)}catch(e){return String(x)}` +
+      `})},'*')}catch(e){}};` +
+      `['log','warn','error','info'].forEach(function(m){` +
+      `var o=console[m];console[m]=function(){o.apply(console,arguments);_s(m,arguments)};});` +
+      `window.addEventListener('error',function(e){_s('error',[e.message])});` +
+      `})()\u003c\/script>`;
+
     function injectAssets(html, css, js) {
       const styleTag  = css.trim()  ? `<style>\n${css}\n</style>`   : '';
       const scriptTag = js.trim()   ? `<script>\n${js}\n<\/script>` : '';
 
       let result = html;
+
+      // Injecteer console bridge als eerste script in <head>
+      if (/(<head[^>]*>)/i.test(result)) {
+        result = result.replace(/(<head[^>]*>)/i, `$1\n${CONSOLE_BRIDGE}`);
+      } else {
+        result = CONSOLE_BRIDGE + '\n' + result;
+      }
 
       if (styleTag) {
         if (/(<\/head>)/i.test(result)) {
