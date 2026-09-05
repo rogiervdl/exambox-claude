@@ -23,11 +23,11 @@ Nog wat je verder nodig hebt:
 Teksten van de pagina, zodat je ze kan kopiëren:
 
 ```
-De Zoete Verleiding
+De Zoete Verleiding 🍫
 
 Chocolatier in Brugge — ambachtelijk sinds 1971
 
-Deze maand een gratis proefdoosje bij elke bestelling
+🎁 Deze maand een gratis proefdoosje bij elke bestelling
 
 Home
 
@@ -79,7 +79,7 @@ Aantal doosjes (placeholder: 1)
 
 Boodschap bij het cadeau (placeholder: Van harte!)
 
-Verpak het als cadeau
+Verpak het als cadeau 🎁
 
 Bestellen
 

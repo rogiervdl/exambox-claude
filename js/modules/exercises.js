@@ -18,6 +18,9 @@ const Exercises = (() => {
    let saveTimeout = null;
    let isLoading = false;
 
+   // script dat de Live Preview van VS Code in elke geserveerde HTML injecteert
+   const DEV_SERVER_SCRIPT = /<script[^>]*___vscode_livepreview_injected_script[^>]*><\/script>/g;
+
    // talen waarvoor Monaco de codeblokken in de opgave kan inkleuren
    const LANGUAGE_MAP = {
       css:        'css',
@@ -217,10 +220,22 @@ const Exercises = (() => {
       try {
          const response = await fetch(url);
          if (!response.ok) return null;
-         return await response.text();
+         return stripDevServerScript(await response.text());
       } catch (e) {
          return null;
       }
+   }
+
+   /**
+    * Haalt het script weg dat een ontwikkelserver in de startcode injecteert.
+    * De Live Preview van VS Code plakt zijn eigen script in elke HTML die hij serveert;
+    * dat zou anders als eerste regel in de editor van de student verschijnen.
+    *
+    * @param {string} text - De opgehaalde bestandsinhoud
+    * @returns {string} dezelfde inhoud zonder het geïnjecteerde script
+    */
+   function stripDevServerScript(text) {
+      return text.replace(DEV_SERVER_SCRIPT, '');
    }
 
    /**
@@ -244,14 +259,13 @@ const Exercises = (() => {
     * @returns {Promise<string>} de gerenderde HTML
     */
    async function renderReadme() {
-      const container = document.createElement('div');
-      container.innerHTML = marked.parse(currentReadme);
+      const doc = parseReadme();
 
       // de kleuring is versiering: gaat er iets mis, dan tonen we de opgave
       // zonder kleur in plaats van helemaal niet
       try {
          // marked zet de taal van de fence in een class; blokken zonder taal blijven ongekleurd
-         const blocks = Array.from(container.querySelectorAll('pre > code[class^="language-"]'));
+         const blocks = [...doc.querySelectorAll('pre > code[class^="language-"]')];
 
          await Promise.all(blocks.map(async function (block) {
             const language = LANGUAGE_MAP[block.className.replace('language-', '')];
@@ -262,13 +276,33 @@ const Exercises = (() => {
             block.innerHTML = colored.replace(/<br\/>/g, '\n');
          }));
 
-         if (blocks.length) inlineTokenColors(container);
+         if (blocks.length) return inlineTokenColors(doc.body.innerHTML);
       } catch (e) {
          console.warn('Exercises: syntaxkleuring overgeslagen', e);
-         container.innerHTML = marked.parse(currentReadme);
+         return parseReadme().body.innerHTML;
       }
 
-      return container.innerHTML;
+      return doc.body.innerHTML;
+   }
+
+   /**
+    * Parseert de README naar HTML en maakt de afbeeldingspaden absoluut.
+    * Het parsen gebeurt in een inert document, want dat laadt nog geen afbeeldingen:
+    * anders lost de browser de relatieve paden uit de markdown eerst op tegen de
+    * app-URL, met een 404 per afbeelding tot gevolg.
+    *
+    * @returns {Document} het inerte document met de gerenderde markdown
+    */
+   function parseReadme() {
+      const doc = new DOMParser().parseFromString(marked.parse(currentReadme), 'text/html');
+      const absBase = new URL(currentExerciseBaseUrl, window.location.href).href;
+
+      doc.querySelectorAll('img').forEach(function (img) {
+         const src = img.getAttribute('src');
+         if (src) img.setAttribute('src', new URL(src, absBase).href);
+      });
+
+      return doc;
    }
 
    /**
@@ -276,10 +310,13 @@ const Exercises = (() => {
     * Die klassen komen uit de stylesheet van de app; een PiP-venster of een nieuw
     * tabblad heeft die niet, en zou de code dan kleurloos tonen.
     *
-    * @param {HTMLElement} container - De container met de gekleurde codeblokken
+    * @param {string} html - De gerenderde HTML met de gekleurde codeblokken
+    * @returns {string} dezelfde HTML, met de tokenkleuren als inline stijl
     */
-   function inlineTokenColors(container) {
+   function inlineTokenColors(html) {
       // stijlen zijn pas berekenbaar zodra het element in de pagina hangt
+      const container = document.createElement('div');
+      container.innerHTML = html;
       container.style.cssText = 'position: absolute; visibility: hidden;';
       document.body.appendChild(container);
 
@@ -292,7 +329,8 @@ const Exercises = (() => {
       });
 
       document.body.removeChild(container);
-      container.removeAttribute('style');
+
+      return container.innerHTML;
    }
 
    /**
@@ -333,11 +371,11 @@ const Exercises = (() => {
          code { background: ${palette.inlineBg}; border-radius: 3px; font-family: Consolas, monospace; font-size: 12px; padding: 1px 5px; }
          pre { background: ${palette.blockBg}; border-radius: 4px; margin-bottom: 10px; overflow-x: auto; padding: 12px; }
          pre code { background: none; padding: 0; }
+         pre code:not([class]) { white-space: pre-wrap; }
          img { border-radius: 4px; max-width: 100%; }
          strong { font-weight: 600; }
       </style><base href="${absBase}">`;
       pipWindow.document.body.innerHTML = `<h1>${currentExerciseLabel}</h1>${body}`;
-      fixImagePaths(pipWindow.document.body, absBase);
    }
 
    /**
@@ -358,25 +396,8 @@ const Exercises = (() => {
    async function showReadme() {
       document.querySelector('.modal__title').textContent = `Opgave — ${currentExerciseLabel}`;
       modalBody.innerHTML = await renderReadme();
-      fixImagePaths(modalBody);
       modalBody.insertAdjacentHTML('beforeend', Config.readmeTip);
       modal.setAttribute('aria-hidden', 'false');
-   }
-
-   /**
-    * Zet relatieve afbeeldingspaden om naar absolute paden t.o.v. de oefening.
-    *
-    * @param {HTMLElement} container - De container met de gerenderde markdown
-    * @param {string} [base] - Optionele base URL; gebruikt currentExerciseBaseUrl als niet opgegeven
-    */
-   function fixImagePaths(container, base) {
-      const resolvedBase = base ?? currentExerciseBaseUrl;
-      container.querySelectorAll('img').forEach(function (img) {
-         const src = img.getAttribute('src');
-         if (src && !src.startsWith('http') && !src.startsWith('/')) {
-            img.src = `${resolvedBase}${src}`;
-         }
-      });
    }
 
    /**
@@ -404,6 +425,7 @@ const Exercises = (() => {
       code { background: ${palette.inlineBg}; border-radius: 3px; font-family: Consolas, monospace; font-size: 13px; padding: 2px 5px; }
       pre { background: ${palette.blockBg}; border-radius: 6px; font-size: 13px; overflow-x: auto; padding: 16px; }
       pre code { background: none; padding: 0; }
+      pre code:not([class]) { white-space: pre-wrap; }
       img { border-radius: 4px; max-width: 100%; }
       strong { font-weight: 600; }
    </style>
@@ -423,7 +445,23 @@ ${body}
     * Verbergt de modal.
     */
    function closeModal() {
+      releaseFocus(modal, btnReadme);
       modal.setAttribute('aria-hidden', 'true');
+   }
+
+   /**
+    * Haalt de focus uit een dialoogvenster voor het verborgen wordt.
+    * aria-hidden op een element dat de focus bevat is een toegankelijkheidsfout:
+    * hulpsoftware blijft dan een element aanwijzen dat er visueel niet meer is.
+    *
+    * @param {HTMLElement} dialog - Het dialoogvenster dat verborgen wordt
+    * @param {HTMLElement} [target] - Element dat de focus overneemt; anders valt de focus weg
+    */
+   function releaseFocus(dialog, target) {
+      if (!dialog.contains(document.activeElement)) return;
+
+      if (target) target.focus();
+      else document.activeElement.blur();
    }
 
    /**
@@ -501,6 +539,7 @@ ${body}
          modalConfirm.setAttribute('aria-hidden', 'false');
 
          function finish(useSaved) {
+            releaseFocus(modalConfirm, selectExercise);
             modalConfirm.setAttribute('aria-hidden', 'true');
             btnConfirmBewaarde.removeEventListener('click', onBewaarde);
             btnConfirmStartcode.removeEventListener('click', onStartcode);

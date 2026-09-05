@@ -35,7 +35,7 @@ Maak een tabel naar voorbeeld van de screenshot.
 
 ### Teksten
 
-Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. Elke regel is één rij.
+Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. 
 
 ```
 Vertrek   Spoor   Type

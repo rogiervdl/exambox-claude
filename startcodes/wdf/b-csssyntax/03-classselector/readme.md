@@ -20,7 +20,8 @@ Dezelfde class mag zo vaak voorkomen als je wil. Kies een naam die zegt wát iet
 
 Selecteer elementen op basis van hun class attribuut.
 
-1. Geef de items met class `highlight` een oranje achtergrondkleur met `background-color: #ffa600`, en zet ze schuin met `font-style: italic`.
+1. Geef alle elementen met class `highlight` een oranje achtergrondkleur met `background-color: #ffa600`, en zet ze schuin met `font-style: italic`. Let op: die class staat op drie soorten elementen.
+2. Maak alle elementen met class `note` grijs met `color: #777` en wat kleiner met `font-size: smaller`.
 
 ## Screenshot
 

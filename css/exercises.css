@@ -169,6 +169,12 @@
          background: none;
          padding: 0;
       }
+
+      /* een blok zonder taal is gegeven tekst, geen code: dat mag afbreken */
+
+      & code:not([class]) {
+         white-space: pre-wrap;
+      }
    }
 
    & img {

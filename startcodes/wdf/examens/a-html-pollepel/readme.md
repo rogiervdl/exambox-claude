@@ -29,7 +29,7 @@ FR
 
 EN
 
-De Pollepel
+De Pollepel 🍲
 
 Kooklessen in kleine groep, aan de Dijle
 
@@ -59,11 +59,11 @@ Lessenrooster najaar 2026
 
 Datum   Les   Prijs
 
-3 oktober   Verse pasta   € 45
+3 oktober   🍝 Verse pasta   € 45
 
-17 oktober   Vis van de Noordzee   € 55
+17 oktober   🐟 Vis van de Noordzee   € 55
 
-7 november   Brood & desem   € 40
+7 november   🥖 Brood & desem   € 40
 
 Waar vind je ons
 

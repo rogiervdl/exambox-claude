@@ -21,6 +21,21 @@ const Resizer = (() => {
    }
 
    /**
+    * Geeft de minimale grootte van een paneel terug.
+    * Een dichtgeklapt paneel ligt via CSS vast op 30px en klemt dus niet mee:
+    * anders zou het slepen meteen blokkeren zodra de buur dichtgeklapt is.
+    *
+    * @param {HTMLElement} pane - Het paneel
+    * @param {number} min - De minimale grootte in pixels
+    * @returns {number} het minimum, of 0 voor een dichtgeklapt paneel
+    */
+   function paneMinSize(pane, min) {
+      const isCollapsed = pane.classList.contains('is-minimized') || pane.classList.contains('is-collapsed');
+
+      return isCollapsed ? 0 : min;
+   }
+
+   /**
     * Maakt een sleepbare resizer tussen twee panelen.
     *
     * @param {HTMLElement} resizerEl   - Het resizer-element
@@ -29,15 +44,22 @@ const Resizer = (() => {
     * @param {null}        getSize     - Ongebruikt, gereserveerd
     * @param {Function}    setSize     - Past de flex-grootte van beide panelen aan
     * @param {Function}    isVerticalFn - Geeft true terug als de richting verticaal is
+    * @param {number}      minA        - Minimale grootte van het eerste paneel in pixels
+    * @param {number}      minB        - Minimale grootte van het tweede paneel in pixels
     */
    function initResizer(resizerEl, getA, getB, getSize, setSize, isVerticalFn, minA = 80, minB = 80) {
       let startPos, startSizeA, startSizeB;
 
       function onMove(e) {
-         const delta = (isVerticalFn() ? e.clientY : e.clientX) - startPos;
-         const newA = Math.max(minA, startSizeA + delta);
-         const newB = Math.max(minB, startSizeB - delta);
-         setSize(getA(), getB(), newA, newB);
+         const moved = (isVerticalFn() ? e.clientY : e.clientX) - startPos;
+
+         // begrens de verplaatsing zodat geen van beide panelen onder zijn minimum zakt;
+         // enkel paneel A krijgt een vaste grootte, dus B moet mee begrensd worden
+         const lower = paneMinSize(getA(), minA) - startSizeA;
+         const upper = startSizeB - paneMinSize(getB(), minB);
+         const delta = Math.min(Math.max(moved, lower), upper);
+
+         setSize(getA(), getB(), startSizeA + delta, startSizeB - delta);
          Object.values(editors).forEach(function (ed) { ed.layout(); });
       }
 

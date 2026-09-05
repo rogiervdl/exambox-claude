@@ -39,15 +39,15 @@ Maak een tabel naar voorbeeld van de screenshot. Tel per rij hoeveel kolommen ze
 
 ### Teksten
 
-Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. Elke regel is één rij; de eerste regel is het bijschrift. Een cel die over meerdere rijen loopt, staat enkel in de rij waar ze begint.
+Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. De eerste regel is het bijschrift. 
 
 ```
 Lessenrooster eerste jaar
 
-Uur   maandag   dinsdag   woensdag
+Uur     maandag          dinsdag    woensdag
 09:00   Webdevelopment   Wiskunde   Databanken
-10:00   Wiskunde   Databanken
+10:00                    Wiskunde   Databanken
 12:00   middagpauze
-13:00   Netwerken   Project   Engels
-14:00   Netwerken   Engels
+13:00   Netwerken        Project    Engels
+14:00   Netwerken                   Engels
 ```

@@ -13,6 +13,32 @@ body {
 }
 
 
+/* gegeven opmaak */
+
+h3 {
+   font-size: 19px;
+}
+
+h4 {
+   font-size: 16px;
+   margin-bottom: 6px;
+}
+
+table {
+   border-collapse: collapse;
+   margin-bottom: 15px;
+}
+
+ul {
+   margin: 0 0 10px;
+   padding-left: 20px;
+}
+
+blockquote {
+   margin: 0 0 10px;
+}
+
+
 /* groeperen */
 
 /* ... */

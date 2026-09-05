@@ -13,6 +13,41 @@ body {
 }
 
 
+/* gegeven opmaak */
+
+header {
+   align-items: center;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   justify-content: space-between;
+   margin-bottom: 20px;
+}
+
+h1 {
+   font-size: 22px;
+}
+
+h2 {
+   font-size: 17px;
+   margin-bottom: 5px;
+}
+
+section {
+   margin-bottom: 18px;
+}
+
+input {
+   padding: 5px;
+}
+
+footer {
+   border-top: 1px solid #ccc;
+   margin-top: 10px;
+   padding-top: 12px;
+}
+
+
 /* id-selector */
 
 /* ... */

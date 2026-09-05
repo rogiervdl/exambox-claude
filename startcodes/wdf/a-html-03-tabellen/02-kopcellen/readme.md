@@ -38,7 +38,7 @@ Maak een tabel naar voorbeeld van de screenshot. Denk ook aan de `scope`-attribu
 
 ### Teksten
 
-Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. Elke regel is één rij; de eerste regel is het bijschrift.
+Alle teksten van de tabel staan hieronder, zonder opmaak, zodat je ze kan kopiëren. De eerste regel is het bijschrift.
 
 ```
 Verkochte stuks eerste kwartaal

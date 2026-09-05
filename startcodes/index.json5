@@ -597,14 +597,14 @@
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "06-specificity",
-                     label: "06. specificity",
+                     id: "06-compoundselector",
+                     label: "06. compound selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "07-universeleselector",
-                     label: "07. universele selector",
+                     id: "07-descendantselector",
+                     label: "07. descendant selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
@@ -615,56 +615,68 @@
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "09-descendantselector",
-                     label: "09. descendant selector",
+                     id: "09-overerving",
+                     label: "09. overerving",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "10-directchildselector",
-                     label: "10. direct child selector",
+                     id: "10-universeleselector",
+                     label: "10. universele selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "11-nextsiblingselector",
-                     label: "11. next sibling selector",
+                     id: "11-directchildselector",
+                     label: "11. direct child selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "12-attributeselector",
-                     label: "12. attribute selector",
+                     id: "12-nextsiblingselector",
+                     label: "12. next sibling selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "13-interactiestaten",
-                     label: "13. :hover, :active, :focus",
+                     id: "13-attributeselector",
+                     label: "13. attribute selector",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "14-firstlastchild",
-                     label: "14. :first-child, :last-child",
+                     id: "14-interactiestaten",
+                     label: "14. :hover, :active, :focus",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "15-beforeafter",
-                     label: "15. ::before en ::after",
+                     id: "15-firstlastchild",
+                     label: "15. :first-child, :last-child",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "16-tekstpseudoelements",
-                     label: "16. ::selection, ::first-letter, ::first-line",
+                     id: "16-beforeafter",
+                     label: "16. ::before en ::after",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   },
                   {
-                     id: "17-combineren",
-                     label: "17. selectoren combineren",
+                     id: "17-tekstpseudoelements",
+                     label: "17. ::selection, ::first-letter, ::first-line",
+                     startfiles: [ "html", "css", "md" ],
+                     collapsed: [ "js" ]
+                  },
+                  {
+                     id: "18-specificity",
+                     label: "18. specificity",
+                     startfiles: [ "html", "css", "md" ],
+                     collapsed: [ "js" ]
+                  },
+                  {
+                     id: "19-combineren",
+                     label: "19. selectoren combineren",
                      startfiles: [ "html", "css", "md" ],
                      collapsed: [ "js" ]
                   }

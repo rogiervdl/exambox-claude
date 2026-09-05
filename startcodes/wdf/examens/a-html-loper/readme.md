@@ -23,7 +23,7 @@ Nog wat je verder nodig hebt:
 Teksten van de pagina, zodat je ze kan kopiëren:
 
 ```
-De Loper 
+De Loper ♟️
 
 Schaakclub in hartje Gent, sinds 1974
 
@@ -57,7 +57,7 @@ Puntentelling
 
 1 punt bij winst, ½ punt bij remise
 
-Clubkampioenschap
+Clubkampioenschap 🏆
 
 Ronde 3 van het clubkampioenschap
 

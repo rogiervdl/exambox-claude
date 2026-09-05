@@ -1,0 +1,38 @@
+/* basis */
+
+* {
+   box-sizing: border-box;
+}
+
+body {
+   background-color: #fafafa;
+   margin: 0;
+   padding: 12px;
+}
+
+
+/* gegeven opmaak */
+
+h1 {
+   font-size: 22px;
+}
+
+ul {
+   margin: 10px 0;
+   padding-left: 20px;
+}
+
+form {
+   display: flex;
+   gap: 8px;
+   margin-top: 15px;
+}
+
+input {
+   padding: 5px;
+}
+
+
+/* overerving */
+
+/* ... */

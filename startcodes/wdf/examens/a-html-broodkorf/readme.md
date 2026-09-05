@@ -23,7 +23,7 @@ Nog wat je verder nodig hebt:
 Teksten van de pagina, zodat je ze kan kopiëren:
 
 ```
-De Broodkorf
+De Broodkorf 🥖
 
 Ambachtelijke bakkerij in Brussel, sinds 1958
 
@@ -37,7 +37,7 @@ Over de bakkerij
 
 Wij bakken elke ochtend vanaf vier uur, met bloem van een molen uit het Pajottenland. Wat 's avonds overblijft, gaat naar de voedselbank van de stad Brussel.
 
-Croissants en taarten maken we enkel op bestelling, zodat er niets verloren gaat.
+Croissants 🥐 en taarten 🎂 maken we enkel op bestelling, zodat er niets verloren gaat.
 
 Brood bakken is een kunst: elk brood vertelt een verhaal van zorg en aandacht.
 

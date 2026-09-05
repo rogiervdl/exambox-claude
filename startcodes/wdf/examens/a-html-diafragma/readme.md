@@ -23,7 +23,7 @@ Nog wat je verder nodig hebt:
 Teksten van de pagina, zodat je ze kan kopiëren:
 
 ```
-Diafragma
+Diafragma 📷
 
 Fotoclub in Kessel-Lo — sinds 1998
 
@@ -43,7 +43,7 @@ Een foto is een geheim over een geheim: hoe meer ze vertelt, hoe minder je weet.
 
 On Photography
 
-Foto van de maand
+Foto van de maand ✨
 
 Winter in Lapland — Marieke Segers
 

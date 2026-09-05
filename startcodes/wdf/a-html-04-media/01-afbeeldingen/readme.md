@@ -16,15 +16,22 @@ Staat de afbeelding **in een link**, dan wordt haar `alt` de linktekst. Beschrij
 </a>
 ```
 
+Met `width` en `height` geef je de **afmetingen van het bestand** mee, in pixels en zonder eenheid. Ze zijn niet verplicht, maar wel aanbevolen waar je de afmetingen kent: de browser reserveert dan al plaats voor de afbeelding, zodat de pagina niet *verspringt* tijdens het laden. Het zijn geen schaalinstellingen — schalen doe je met CSS.
+
+```html
+<img src="img/kust.jpg" alt="De Belgische kust bij zonsondergang" width="800" height="600">
+```
+
 ## Opdracht
 
 Maak onderstaande pagina. Gebruik voor de titels `<h3>` en `<h4>`.
 
 1. de decoratieve band heet `vlagband.png` en staat in een submap `img/`
-2. foto hoofdgerecht heet `moules-frites.jpg` en staat in een submap `img/gerechten/`
+2. foto hoofdgerecht heet `moules-frites.jpg` (500 bij 281 pixels) en staat in een submap `img/gerechten/`
 3. foto dessert is te vinden op *https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Li%C3%A8ge_waffles_on_a_plate.jpg/330px-Li%C3%A8ge_waffles_on_a_plate.jpg*
 4. link onderaan een youtube icoon `img/youtube.png` naar *https://www.youtube.com/c/NJAMhetKOOKKANAAL*
 5. geef elke afbeelding een alt-attribuut; vul enkel in waar nodig
+6. geef de foto van het hoofdgerecht ook een `width` en een `height`
 
 ### Screenshot
 

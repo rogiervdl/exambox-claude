@@ -15,23 +15,53 @@ body {
 
 /* gegeven opmaak */
 
-.buttons {
-   display: grid;
-   gap: 15px;
-   grid-template-columns: auto auto;
-   justify-items: start;
+header {
+   align-items: center;
+   display: flex;
+   gap: 20px;
+   justify-content: space-between;
+   margin-bottom: 15px;
+}
+
+h1 {
+   font-size: 22px;
+}
+
+h2 {
+   font-size: 17px;
+   margin: 15px 0 5px;
+}
+
+h3 {
+   font-size: 15px;
+}
+
+nav {
+   display: flex;
+   gap: 8px;
+}
+
+p {
+   margin: 8px 0;
+}
+
+form {
+   background-color: #eee;
+   border-radius: 6px;
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   margin-top: 20px;
+   padding: 15px;
    width: fit-content;
 }
 
-.button {
-   background-color: #6c757d;
-   border-radius: 8px;
-   color: white;
-   cursor: pointer;
-   font-size: 14px;
-   padding: 8px 14px;
-   text-decoration: none;
-   text-transform: uppercase;
+input {
+   padding: 6px;
+}
+
+.acties {
+   margin: 20px 0;
 }
 
 
